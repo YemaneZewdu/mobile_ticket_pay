@@ -55,82 +55,87 @@ Widget ticketDetails (String title, String description){
 }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget._ticketModel.location),
-      ),
-      body: Stack(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(15),
-                child: Hero(
-                  tag: widget._ticketModel.location.toString(),
-                  child: Column(
-                    children: <Widget>[
-                      ticketDetails("Reason", widget._ticketModel.violation.toString()),
-                      ticketDetails("Location", widget._ticketModel.location.toString()),
-                      ticketDetails("Payment",  "\$" + "${widget._ticketModel.fee}"),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-
-          // contains google map view
-          Center(
-            child: Container(
-              height: 300,
-              width: MediaQuery.of(context).size.width,
-              child: GoogleMap(
-                onMapCreated: (GoogleMapController controller) {
-                  mapController = controller;
-                },
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(38.871768, -76.96860599999999),
-                  zoom: 15.0,
-                ),
-                markers: {ticketLocationMarker},
-              ),
-            ),
-          ),
-
-          // contains two buttons
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget._ticketModel.location),
+        ),
+        body: Stack(
+          children: <Widget>[
+            Column(
               children: <Widget>[
-                RaisedButton(
-                  onPressed: () {
-                    print('Pay button tapped');
-                  },
-                  padding: const EdgeInsets.all(8.0),
-                  textColor: Colors.white,
-                  color: Colors.blue,
-                  child: Text(
-                    'Pay',
-                    style: TextStyle(fontSize: 20),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Card(
+                    //tag: widget._ticketModel.location.toString(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        ticketDetails("Reason", widget._ticketModel.violation.toString()),
+                        ticketDetails("Location", widget._ticketModel.location.toString()),
+                        ticketDetails("Payment",  "\$" + "${widget._ticketModel.fee}"),
+                      ],
+                    ),
                   ),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    print('Cancel button tapped');
-                  },
-                  padding: const EdgeInsets.all(8.0),
-                  textColor: Colors.white,
-                  color: Colors.red,
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
+                )
               ],
             ),
-          ),
-        ],
+
+            // contains google map view
+            Center(
+              child: Container(
+                height: 300,
+                width: MediaQuery.of(context).size.width,
+                child: GoogleMap(
+                  onMapCreated: (GoogleMapController controller) {
+                    mapController = controller;
+                  },
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(38.871768, -76.96860599999999),
+                    zoom: 15.0,
+                  ),
+                  markers: {ticketLocationMarker},
+                ),
+              ),
+            ),
+
+            // contains two buttons
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  RaisedButton(
+                    onPressed: () {
+                      print('Pay button tapped');
+                    },
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: Colors.blue,
+                    child: Text(
+                      'Pay',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      print('Cancel button tapped');
+                    },
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: Colors.red,
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

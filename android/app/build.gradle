@@ -25,6 +25,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+// this will look for google map key from local.properties file
+def googleMapApiKey = localProperties.getProperty('googleMapApiKey')
 android {
     compileSdkVersion 28
 
@@ -44,6 +46,7 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [googleMapApiKey : localProperties.getProperty('googleMapApiKey')]
     }
 
     buildTypes {
